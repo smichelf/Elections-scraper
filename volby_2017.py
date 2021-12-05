@@ -50,7 +50,6 @@ def collect_villages(i) -> dict:
     :return: dictionary kde klíč je název obce a hodnota je list 2 hodnoty, číslo obce a link na výsledky voleb.
     """
     rdict = {}
-    tlist = []
     village_num = ''
     village_href = ''
     r = requests.get(href[i])
@@ -63,11 +62,8 @@ def collect_villages(i) -> dict:
             village_href = convert_to_href('https://volby.cz/pls/ps2017nss/', str(item.find('a')), 9)
             flag = 0
         if flag == 1:
-            tlist.clear()
             village_name = str(item.get_text())
-            tlist.append(village_num)
-            tlist.append(village_href)
-            rdict[village_name] = tlist.copy()
+            rdict[village_name] = [village_num, village_href]
     return rdict
 
 
