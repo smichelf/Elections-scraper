@@ -119,6 +119,7 @@ def write_result(rdict: dict, fname: str) -> None:
         return res
 
     for i, village in enumerate(rdict):
+        running = ['|', '/', '-', '\\']
         r = requests.get(rdict[village][1])
         csv_output.clear()
         soup = bs4.BeautifulSoup(r.text, 'html.parser')
@@ -133,7 +134,9 @@ def write_result(rdict: dict, fname: str) -> None:
             writer.writerow(csv_header)
         csv_output.extend([strana['Hlasy %'] for strana in results])
         writer.writerow(csv_output)
+        print(running[i % 4], end="\r")
     outfile.close()
+    print(' ', end='\r')
 
 
 def volby2017():
